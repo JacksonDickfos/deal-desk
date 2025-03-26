@@ -1,14 +1,16 @@
 export type DealStage = "Demo'd" | "Closing" | "Won" | "Lost";
-export type Owner = "Hasan" | "Jared" | "Guillermo" | "Ricardo" | "Kamran";
-export type Product = "Kayako" | "Influitive" | "Agents" | "CRMagic" | "Ephor";
+export type Owner = 'Hasan' | 'Jared' | 'Guillermo' | 'Ricardo' | 'Kamran';
+export type Product = 'Kayako' | 'Influitive' | 'Agents' | 'CRMagic' | 'Ephor' | 'AI Caller';
 
 export interface Deal {
   id: string;
-  name: string;
+  company: string;
   amount: number;
+  raas: number;
   owner: Owner;
   product: Product;
   stage: DealStage;
+  demoDate?: Date;
   summary?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -16,8 +18,10 @@ export interface Deal {
 
 export interface ColumnStats {
   deals: number;
-  amount: number;
-  forecast: number;
+  arr: number;
+  raas: number;
+  forecastedArr: number;
+  forecastedRaas: number;
 }
 
 export interface OwnerProfile {

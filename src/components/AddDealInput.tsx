@@ -1,53 +1,50 @@
+'use client';
+
 import { useState } from 'react';
-import { parseDealInput } from '@/utils/dealParser';
-import { Deal } from '@/types';
+import { Deal, DealStage } from '@/types';
+import { useDeals } from '@/contexts/DealsContext';
 
-interface AddDealInputProps {
-  onAddDeal: (deal: Deal) => void;
-}
-
-export default function AddDealInput({ onAddDeal }: AddDealInputProps) {
-  const [input, setInput] = useState('');
+export default function AddDealInput() {
+  const { addDeal } = useDeals();
+  const [company, setCompany] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
-
-    const parsedDeal = parseDealInput(input);
-    if (!parsedDeal.name || !parsedDeal.amount || !parsedDeal.owner || !parsedDeal.product) {
-      alert('Please provide all required information: Deal Name, Amount, Owner, and Product');
-      return;
-    }
+    if (!company.trim()) return;
 
     const newDeal: Deal = {
-      id: Date.now().toString(),
-      ...parsedDeal as Required<typeof parsedDeal>,
+      id: Math.random().toString(36).substr(2, 9),
+      company: company.trim(),
+      amount: 0,
+      raas: 0,
+      owner: 'Hasan',
+      product: 'Kayako',
+      stage: "Demo'd",
+      createdAt: new Date(),
+      updatedAt: new Date()
     };
 
-    onAddDeal(newDeal);
-    setInput('');
+    addDeal(newDeal);
+    setCompany('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="mb-6">
-      <div className="flex items-center space-x-4">
+      <div className="flex gap-4">
         <input
           type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter deal details (e.g., 'Acme Corp $50000 Hasan Kayako')"
-          className="flex-1 p-2 border rounded-md shadow-sm focus:ring-2 focus:ring-app-purple focus:border-app-purple"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          placeholder="Add new deal..."
+          className="flex-1 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-app-purple text-white rounded-md shadow-sm hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-app-purple"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           Add Deal
         </button>
       </div>
-      <p className="mt-2 text-sm text-gray-500">
-        Format: Deal Name Amount Owner Product (e.g., "Acme Corp $50000 Hasan Kayako")
-      </p>
     </form>
   );
 }
