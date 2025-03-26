@@ -6,7 +6,7 @@ const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor
 export function parseDealInput(input: string): Partial<Deal> {
   const words = input.split(' ');
   const result: Partial<Deal> = {
-    name: '',
+    company: '',
     amount: 0,
     owner: undefined,
     product: undefined,
@@ -43,7 +43,7 @@ export function parseDealInput(input: string): Partial<Deal> {
     !PRODUCTS.includes(word as Product) && 
     !amountMatch?.includes(word)
   );
-  result.name = nameParts.join(' ');
+  result.company = nameParts.join(' ');
 
   return result;
 }
