@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+.deal-card {
+  @apply bg-white rounded-lg shadow-md p-4 mb-4 cursor-pointer transition-all duration-200 hover:shadow-lg;
+}
+
+.deal-card.won {
+  @apply border-2 border-green-500;
+}
+
+.deal-card.lost {
+  @apply border-2 border-red-500;
+}
+
+.kanban-column {
+  @apply bg-gray-50 rounded-lg p-4 min-h-[calc(100vh-12rem)] w-80;
+}
+
+.column-header {
+  @apply text-lg font-semibold mb-4 text-gray-700;
+}
+
+.column-stats {
+  @apply text-sm text-gray-600 mb-4;
+}
+
+.amount-won {
+  @apply font-bold text-app-purple;
+}
