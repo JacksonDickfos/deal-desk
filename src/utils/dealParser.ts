@@ -12,7 +12,7 @@ export function parseDealInput(input: string): Partial<Deal> {
     product: undefined,
     stage: "Demo'd",
     demo_date: new Date(),
-    updatedAt: new Date()
+    updated_at: new Date()
   };
 
   // Find owner
