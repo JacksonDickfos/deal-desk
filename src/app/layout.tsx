@@ -1,16 +1,10 @@
 'use client';
 
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { DealsProvider } from '@/contexts/DealsContext'
 
 const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Deal Desk',
-  description: 'Deal Desk Management System',
-}
 
 export default function RootLayout({
   children,
