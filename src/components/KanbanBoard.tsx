@@ -79,7 +79,7 @@ export default function KanbanBoard() {
     const updatedDeal = {
       ...deal,
       stage: destination.droppableId as DealStage,
-      updatedAt: new Date()
+      updated_at: new Date()
     };
 
     updateDeal(updatedDeal);
