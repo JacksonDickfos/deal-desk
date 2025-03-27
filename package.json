@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@supabase/supabase-js": "^2.49.3",
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.57",
     "@types/react-beautiful-dnd": "^13.1.8",
