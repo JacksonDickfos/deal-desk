@@ -21,6 +21,8 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted with data:', formData);
+    
     const newDeal: Deal = {
       id: uuidv4(),
       company: formData.company,
@@ -35,8 +37,11 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       updatedAt: new Date()
     };
 
+    console.log('Attempting to add new deal:', newDeal);
+
     try {
       await onAdd(newDeal);
+      console.log('Deal added successfully');
       onClose();
       setFormData({
         company: '',
@@ -47,6 +52,10 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       });
     } catch (error) {
       console.error('Error adding deal:', error);
+      if (error instanceof Error) {
+        console.error('Error details:', error.message);
+        console.error('Error stack:', error.stack);
+      }
     }
   };
 
