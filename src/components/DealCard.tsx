@@ -52,9 +52,9 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
         </div>
 
         <div className="flex justify-between items-center mt-2">
-          {deal.demoDate && (
+          {deal.demo_date && (
             <span className="text-sm text-gray-500">
-              {getDaysSinceDemo(deal.demoDate)}
+              {getDaysSinceDemo(deal.demo_date)}
             </span>
           )}
           <div className="flex gap-2">
