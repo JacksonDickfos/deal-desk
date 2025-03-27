@@ -42,7 +42,7 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       raas: parseFloat(formData.raas) || 0,
       demo_date: new Date(),
       summary: '',
-      updatedAt: new Date()
+      updated_at: new Date()
     };
 
     console.log('Created new deal object:', newDeal);
