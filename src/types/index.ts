@@ -12,7 +12,7 @@ export interface Deal {
   stage: DealStage;
   demo_date?: Date;
   summary?: string;
-  updatedAt: Date;
+  updated_at: Date;
 }
 
 export interface ColumnStats {

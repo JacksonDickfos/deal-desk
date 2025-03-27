@@ -22,7 +22,7 @@ export default function EditDealModal({ deal, isOpen, onClose, onSave }: EditDea
   const handleSave = () => {
     onSave({
       ...editedDeal,
-      updatedAt: new Date()
+      updated_at: new Date()
     });
     onClose();
   };

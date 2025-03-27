@@ -20,7 +20,7 @@ export default function DealSummaryModal({ deal, isOpen, onClose, onSave }: Deal
     onSave({
       ...deal,
       summary,
-      updatedAt: new Date()
+      updated_at: new Date()
     });
     onClose();
   };

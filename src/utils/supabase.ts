@@ -30,7 +30,7 @@ export const getDeals = async (): Promise<Deal[]> => {
   return data.map(deal => ({
     ...deal,
     demo_date: deal.demo_date ? new Date(deal.demo_date) : undefined,
-    updatedAt: new Date(deal.updated_at)
+    updated_at: new Date(deal.updated_at)
   }));
 };
 
