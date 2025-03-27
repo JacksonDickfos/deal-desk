@@ -10,6 +10,9 @@ interface AddDealModalProps {
   onAdd: (deal: Deal) => Promise<void>;
 }
 
+const OWNERS: Owner[] = ['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'];
+const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
+
 export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalProps) {
   const [formData, setFormData] = useState({
     company: '',
@@ -18,10 +21,16 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
     product: 'Kayako' as Product,
     raas: ''
   });
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted with data:', formData);
+    console.log('Form submission started');
+    setError(null);
+    setIsSubmitting(true);
+    
+    console.log('Form data:', formData);
     
     const newDeal: Deal = {
       id: uuidv4(),
@@ -33,13 +42,13 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       raas: parseFloat(formData.raas) || 0,
       demoDate: new Date(),
       summary: '',
-      createdAt: new Date(),
       updatedAt: new Date()
     };
 
-    console.log('Attempting to add new deal:', newDeal);
+    console.log('Created new deal object:', newDeal);
 
     try {
+      console.log('Calling onAdd function...');
       await onAdd(newDeal);
       console.log('Deal added successfully');
       onClose();
@@ -55,7 +64,12 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       if (error instanceof Error) {
         console.error('Error details:', error.message);
         console.error('Error stack:', error.stack);
+        setError(error.message);
+      } else {
+        setError('An unexpected error occurred while adding the deal');
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -73,6 +87,11 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
             ×
           </button>
         </div>
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Company</label>
@@ -110,7 +129,7 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
               onChange={(e) => setFormData({ ...formData, owner: e.target.value as Owner })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             >
-              {['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'].map((owner) => (
+              {OWNERS.map((owner) => (
                 <option key={owner} value={owner}>{owner}</option>
               ))}
             </select>
@@ -122,7 +141,7 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
               onChange={(e) => setFormData({ ...formData, product: e.target.value as Product })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             >
-              {['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'].map((product) => (
+              {PRODUCTS.map((product) => (
                 <option key={product} value={product}>{product}</option>
               ))}
             </select>
@@ -130,9 +149,12 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
           <div className="mt-6 px-4">
             <button
               type="submit"
-              className="w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              disabled={isSubmitting}
+              className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                isSubmitting ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'
+              }`}
             >
-              Add Deal
+              {isSubmitting ? 'Adding...' : 'Add Deal'}
             </button>
           </div>
         </form>
