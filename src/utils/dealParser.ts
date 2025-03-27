@@ -1,7 +1,7 @@
 import { Deal, Owner, Product } from '@/types';
 
 const OWNERS: Owner[] = ['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'];
-const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'];
+const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
 
 export function parseDealInput(input: string): Partial<Deal> {
   const words = input.split(' ');
@@ -11,8 +11,7 @@ export function parseDealInput(input: string): Partial<Deal> {
     owner: undefined,
     product: undefined,
     stage: "Demo'd",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    updatedAt: new Date()
   };
 
   // Find owner
