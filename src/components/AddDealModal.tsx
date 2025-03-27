@@ -16,10 +16,7 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
     amount: '',
     owner: 'Hasan' as Owner,
     product: 'Kayako' as Product,
-    stage: "Demo'd" as Deal['stage'],
-    raas: '',
-    demoDate: '',
-    summary: ''
+    raas: ''
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,26 +27,27 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       amount: parseFloat(formData.amount) || 0,
       owner: formData.owner,
       product: formData.product,
-      stage: formData.stage,
+      stage: "Demo'd",
       raas: parseFloat(formData.raas) || 0,
-      demoDate: formData.demoDate ? new Date(formData.demoDate) : undefined,
-      summary: formData.summary,
+      demoDate: new Date(),
+      summary: '',
       createdAt: new Date(),
       updatedAt: new Date()
     };
 
-    await onAdd(newDeal);
-    onClose();
-    setFormData({
-      company: '',
-      amount: '',
-      owner: 'Hasan',
-      product: 'Kayako',
-      stage: "Demo'd",
-      raas: '',
-      demoDate: '',
-      summary: ''
-    });
+    try {
+      await onAdd(newDeal);
+      onClose();
+      setFormData({
+        company: '',
+        amount: '',
+        owner: 'Hasan',
+        product: 'Kayako',
+        raas: ''
+      });
+    } catch (error) {
+      console.error('Error adding deal:', error);
+    }
   };
 
   if (!isOpen) return null;
@@ -88,6 +86,15 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
             />
           </div>
           <div>
+            <label className="block text-sm font-medium text-gray-700">RaaS</label>
+            <input
+              type="number"
+              value={formData.raas}
+              onChange={(e) => setFormData({ ...formData, raas: e.target.value })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-700">Owner</label>
             <select
               value={formData.owner}
@@ -111,44 +118,10 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
               ))}
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">RaaS</label>
-            <input
-              type="number"
-              value={formData.raas}
-              onChange={(e) => setFormData({ ...formData, raas: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Demo Date</label>
-            <input
-              type="date"
-              value={formData.demoDate}
-              onChange={(e) => setFormData({ ...formData, demoDate: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Summary</label>
-            <textarea
-              value={formData.summary}
-              onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              rows={3}
-            />
-          </div>
-          <div className="flex justify-end space-x-3 mt-6">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              Cancel
-            </button>
+          <div className="mt-6 px-4">
             <button
               type="submit"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              className="w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Add Deal
             </button>
