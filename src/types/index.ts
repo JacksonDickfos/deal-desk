@@ -10,7 +10,7 @@ export interface Deal {
   owner: Owner;
   product: Product;
   stage: DealStage;
-  demoDate?: Date;
+  demo_date?: Date;
   summary?: string;
   updatedAt: Date;
 }

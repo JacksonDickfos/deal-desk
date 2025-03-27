@@ -40,7 +40,7 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
       product: formData.product,
       stage: "Demo'd",
       raas: parseFloat(formData.raas) || 0,
-      demoDate: new Date(),
+      demo_date: new Date(),
       summary: '',
       updatedAt: new Date()
     };

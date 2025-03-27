@@ -11,6 +11,7 @@ export function parseDealInput(input: string): Partial<Deal> {
     owner: undefined,
     product: undefined,
     stage: "Demo'd",
+    demo_date: new Date(),
     updatedAt: new Date()
   };
 
