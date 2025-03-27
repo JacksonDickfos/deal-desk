@@ -20,7 +20,7 @@ export const getDeals = async (): Promise<Deal[]> => {
   const { data, error } = await supabase
     .from('deals')
     .select('*')
-    .order('updatedAt', { ascending: false });
+    .order('updated_at', { ascending: false });
 
   if (error) {
     console.error('Error fetching deals:', error);
@@ -30,7 +30,7 @@ export const getDeals = async (): Promise<Deal[]> => {
   return data.map(deal => ({
     ...deal,
     demo_date: deal.demo_date ? new Date(deal.demo_date) : undefined,
-    updatedAt: new Date(deal.updatedAt)
+    updatedAt: new Date(deal.updated_at)
   }));
 };
 
@@ -40,7 +40,7 @@ export const updateDeal = async (deal: Deal): Promise<void> => {
     .upsert({
       ...deal,
       demo_date: deal.demo_date?.toISOString(),
-      updatedAt: new Date().toISOString()
+      updated_at: new Date().toISOString()
     });
 
   if (error) {
@@ -55,7 +55,7 @@ export const addDeal = async (deal: Deal): Promise<void> => {
     .insert({
       ...deal,
       demo_date: deal.demo_date?.toISOString(),
-      updatedAt: new Date().toISOString()
+      updated_at: new Date().toISOString()
     });
 
   if (error) {
