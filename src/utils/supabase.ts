@@ -29,7 +29,7 @@ export const getDeals = async (): Promise<Deal[]> => {
 
   return data.map(deal => ({
     ...deal,
-    demoDate: deal.demoDate ? new Date(deal.demoDate) : undefined,
+    demo_date: deal.demo_date ? new Date(deal.demo_date) : undefined,
     updatedAt: new Date(deal.updatedAt)
   }));
 };
@@ -39,7 +39,7 @@ export const updateDeal = async (deal: Deal): Promise<void> => {
     .from('deals')
     .upsert({
       ...deal,
-      demoDate: deal.demoDate?.toISOString(),
+      demo_date: deal.demo_date?.toISOString(),
       updatedAt: new Date().toISOString()
     });
 
@@ -54,7 +54,7 @@ export const addDeal = async (deal: Deal): Promise<void> => {
     .from('deals')
     .insert({
       ...deal,
-      demoDate: deal.demoDate?.toISOString(),
+      demo_date: deal.demo_date?.toISOString(),
       updatedAt: new Date().toISOString()
     });
 
