@@ -20,7 +20,6 @@ export default function AddDealInput() {
       owner: 'Hasan',
       product: 'Kayako',
       stage: "Demo'd",
-      createdAt: new Date(),
       updatedAt: new Date()
     };
 
