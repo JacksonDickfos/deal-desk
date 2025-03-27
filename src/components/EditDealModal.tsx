@@ -80,10 +80,10 @@ export default function EditDealModal({ deal, isOpen, onClose, onSave }: EditDea
             </label>
             <input
               type="date"
-              value={editedDeal.demoDate ? new Date(editedDeal.demoDate).toISOString().split('T')[0] : ''}
+              value={editedDeal.demo_date ? new Date(editedDeal.demo_date).toISOString().split('T')[0] : ''}
               onChange={(e) => setEditedDeal({ 
                 ...editedDeal, 
-                demoDate: e.target.value ? new Date(e.target.value) : new Date() 
+                demo_date: e.target.value ? new Date(e.target.value) : new Date() 
               })}
               className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
