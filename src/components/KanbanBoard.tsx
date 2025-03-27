@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Deal, DealStage } from '@/types';
 import { useDeals } from '@/contexts/DealsContext';
 import DealCard from './DealCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const STAGES: DealStage[] = ["Demo'd", "Closing", "Won", "Lost"];
 
@@ -24,15 +24,14 @@ const FORECAST_PERCENTAGES = {
 
 export default function KanbanBoard() {
   const { deals, updateDeal } = useDeals();
-  const [columns, setColumns] = useState<Record<DealStage, Deal[]>>({
-    "Demo'd": [],
-    'Closing': [],
-    'Won': [],
-    'Lost': []
-  });
+  const [localDeals, setLocalDeals] = useState<Deal[]>(deals);
+
+  useEffect(() => {
+    setLocalDeals(deals);
+  }, [deals]);
 
   const getColumnDeals = (stage: DealStage): Deal[] => {
-    return deals.filter((deal: Deal) => deal.stage === stage);
+    return localDeals.filter((deal: Deal) => deal.stage === stage);
   };
 
   const calculateColumnStats = (stage: DealStage) => {
@@ -67,13 +66,13 @@ export default function KanbanBoard() {
     return { dealsCount, arr, raas, forecastedArr, forecastedRaas };
   };
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = async (result: any) => {
     if (!result.destination) return;
 
     const { source, destination, draggableId } = result;
     if (source.droppableId === destination.droppableId) return;
 
-    const deal = deals.find((d: Deal) => d.id === draggableId);
+    const deal = localDeals.find((d: Deal) => d.id === draggableId);
     if (!deal) return;
 
     const updatedDeal = {
@@ -82,7 +81,19 @@ export default function KanbanBoard() {
       updated_at: new Date()
     };
 
-    updateDeal(updatedDeal);
+    // Optimistically update the local state
+    setLocalDeals(prevDeals => 
+      prevDeals.map(d => d.id === draggableId ? updatedDeal : d)
+    );
+
+    // Update in the database
+    try {
+      await updateDeal(updatedDeal);
+    } catch (error) {
+      // If the update fails, revert the optimistic update
+      setLocalDeals(deals);
+      console.error('Failed to update deal:', error);
+    }
   };
 
   return (
