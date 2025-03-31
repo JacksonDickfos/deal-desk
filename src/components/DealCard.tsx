@@ -23,17 +23,18 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
 
   const getProductImagePath = (product: string) => {
     const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
-    return `/images/products/${normalizedProduct}.png`;
+    return `/static/products/${normalizedProduct}.png`;
   };
 
   const getOwnerImagePath = (owner: string) => {
-    return `/images/owners/${owner.toLowerCase()}.png`;
+    return `/static/owners/${owner.toLowerCase()}.png`;
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.target as HTMLImageElement;
     target.onerror = null; // Prevent infinite loop
-    target.src = '/images/placeholder.png';
+    console.error(`Failed to load image: ${target.src}`);
+    target.src = '/static/placeholder.png';
   };
 
   return (
