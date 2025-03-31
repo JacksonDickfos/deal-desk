@@ -24,13 +24,13 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
 
   const getProductImagePath = (product: string) => {
     const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
-    const path = `/images/products/${normalizedProduct}.png`;
+    const path = `/images/products/${normalizedProduct}.png?v=${Date.now()}`;
     console.log(`Product image path for ${product}: ${path}`);
     return path;
   };
 
   const getOwnerImagePath = (owner: string) => {
-    const path = `/images/owners/${owner.toLowerCase()}.png`;
+    const path = `/images/owners/${owner.toLowerCase()}.png?v=${Date.now()}`;
     console.log(`Owner image path for ${owner}: ${path}`);
     return path;
   };
