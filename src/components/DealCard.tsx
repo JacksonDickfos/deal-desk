@@ -60,10 +60,11 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
           <div className="flex gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
               <Image
-                src={`/images/products/${deal.product.toLowerCase()}.png`}
+                src={`/images/products/${deal.product.toLowerCase().replace(/\s+/g, '-')}.png`}
                 alt={deal.product}
                 fill
                 className="object-cover"
+                priority
               />
             </div>
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Owner: ${deal.owner}`}>
@@ -72,6 +73,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
                 alt={deal.owner}
                 fill
                 className="object-cover"
+                priority
               />
             </div>
           </div>
