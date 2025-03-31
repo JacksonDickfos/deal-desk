@@ -24,11 +24,15 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
 
   const getProductImagePath = (product: string) => {
     const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
-    return `/images/products/${normalizedProduct}.png`;
+    const path = `/images/products/${normalizedProduct}.png`;
+    console.log(`Product image path for ${product}: ${path}`);
+    return path;
   };
 
   const getOwnerImagePath = (owner: string) => {
-    return `/images/owners/${owner.toLowerCase()}.png`;
+    const path = `/images/owners/${owner.toLowerCase()}.png`;
+    console.log(`Owner image path for ${owner}: ${path}`);
+    return path;
   };
 
   return (
@@ -77,6 +81,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
                 priority
                 onError={(e) => {
                   console.error(`Failed to load product image: ${deal.product}`);
+                  console.error(`Attempted path: ${getProductImagePath(deal.product)}`);
                   const target = e.target as HTMLImageElement;
                   target.src = '/images/placeholder.png';
                 }}
@@ -92,6 +97,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
                 priority
                 onError={(e) => {
                   console.error(`Failed to load owner image: ${deal.owner}`);
+                  console.error(`Attempted path: ${getOwnerImagePath(deal.owner)}`);
                   const target = e.target as HTMLImageElement;
                   target.src = '/images/placeholder.png';
                 }}
