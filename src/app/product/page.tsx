@@ -2,16 +2,17 @@
 
 import { useState } from 'react';
 import { useDeals } from '@/contexts/DealsContext';
-import { Deal, Product } from '@/types';
+import { Deal } from '@/types';
 import Image from 'next/image';
+import { STORAGE_BUCKETS, getImageUrl } from '@/lib/supabase';
 
 export default function ProductPage() {
   const { deals } = useDeals();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   const products = Array.from(new Set(deals.map(deal => deal.product)));
   
-  const getProductStats = (product: Product) => {
+  const getProductStats = (product: string) => {
     const productDeals = deals.filter(deal => deal.product === product);
     const totalArr = productDeals.reduce((sum, deal) => sum + deal.amount, 0);
     const totalRaas = productDeals.reduce((sum, deal) => sum + deal.raas, 0);
@@ -30,8 +31,20 @@ export default function ProductPage() {
     };
   };
 
-  const getProductDeals = (product: Product): Deal[] => {
+  const getProductDeals = (product: string): Deal[] => {
     return deals.filter(deal => deal.product === product);
+  };
+
+  const getProductImagePath = (product: string) => {
+    const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
+    return getImageUrl(STORAGE_BUCKETS.PRODUCTS, `${normalizedProduct}.png`);
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.onerror = null; // Prevent infinite loop
+    console.error(`Failed to load image: ${target.src}`);
+    target.src = 'https://api.dicebear.com/7.x/avatars/svg?seed=fallback';
   };
 
   return (
@@ -54,10 +67,12 @@ export default function ProductPage() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-100">
                   <Image
-                    src={`/images/products/${product.toLowerCase()}.png`}
+                    src={getProductImagePath(product)}
                     alt={product}
-                    fill
+                    width={48}
+                    height={48}
                     className="object-cover"
+                    onError={handleImageError}
                   />
                 </div>
                 <h2 className="text-xl font-semibold">{product}</h2>

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDeals } from '@/contexts/DealsContext';
 import { Deal } from '@/types';
 import Image from 'next/image';
+import { STORAGE_BUCKETS, getImageUrl } from '@/lib/supabase';
 
 export default function SalesRepPage() {
   const { deals } = useDeals();
@@ -35,6 +36,18 @@ export default function SalesRepPage() {
     return deals.filter(deal => deal.owner === rep);
   };
 
+  const getOwnerImagePath = (owner: string) => {
+    const normalizedOwner = owner.toLowerCase();
+    return getImageUrl(STORAGE_BUCKETS.OWNERS, `${normalizedOwner}.png`);
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.onerror = null; // Prevent infinite loop
+    console.error(`Failed to load image: ${target.src}`);
+    target.src = 'https://api.dicebear.com/7.x/avatars/svg?seed=fallback';
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Sales Representatives</h1>
@@ -55,10 +68,12 @@ export default function SalesRepPage() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-100">
                   <Image
-                    src={`/images/owners/${rep.toLowerCase()}.png`}
+                    src={getOwnerImagePath(rep)}
                     alt={rep}
-                    fill
+                    width={48}
+                    height={48}
                     className="object-cover"
+                    onError={handleImageError}
                   />
                 </div>
                 <h2 className="text-xl font-semibold">{rep}</h2>
