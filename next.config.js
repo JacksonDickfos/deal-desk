@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  generateBuildId: () => 'build-' + Date.now(),
   images: {
     domains: [],
     unoptimized: true,
