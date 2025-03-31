@@ -6,6 +6,8 @@ import { PencilIcon } from '@heroicons/react/24/outline';
 import DealSummaryModal from './DealSummaryModal';
 import EditDealModal from './EditDealModal';
 import { differenceInDays } from 'date-fns';
+import { STORAGE_BUCKETS, getImageUrl } from '@/lib/supabase';
+import Image from 'next/image';
 
 interface DealCardProps {
   deal: Deal;
@@ -23,18 +25,20 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
 
   const getProductImagePath = (product: string) => {
     const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
-    return `/products/${normalizedProduct}.png`;
+    return getImageUrl(STORAGE_BUCKETS.PRODUCTS, `${normalizedProduct}.png`);
   };
 
   const getOwnerImagePath = (owner: string) => {
-    return `/owners/${owner.toLowerCase()}.png`;
+    const normalizedOwner = owner.toLowerCase();
+    return getImageUrl(STORAGE_BUCKETS.OWNERS, `${normalizedOwner}.png`);
   };
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.target as HTMLImageElement;
     target.onerror = null; // Prevent infinite loop
     console.error(`Failed to load image: ${target.src}`);
-    target.src = '/products/agents.png'; // Using agents.png as placeholder
+    // We'll use a default avatar from a CDN as fallback
+    target.src = 'https://api.dicebear.com/7.x/avatars/svg?seed=fallback';
   };
 
   return (
@@ -74,18 +78,22 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
           )}
           <div className="flex gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
-              <img
+              <Image
                 src={getProductImagePath(deal.product)}
                 alt={deal.product}
-                className="w-8 h-8 object-cover"
+                width={32}
+                height={32}
+                className="object-cover"
                 onError={handleImageError}
               />
             </div>
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Owner: ${deal.owner}`}>
-              <img
+              <Image
                 src={getOwnerImagePath(deal.owner)}
                 alt={deal.owner}
-                className="w-8 h-8 object-cover"
+                width={32}
+                height={32}
+                className="object-cover"
                 onError={handleImageError}
               />
             </div>
