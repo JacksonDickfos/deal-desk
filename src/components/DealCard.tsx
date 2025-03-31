@@ -2,7 +2,6 @@
 
 import { Deal } from '@/types';
 import { useState } from 'react';
-import Image from 'next/image';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import DealSummaryModal from './DealSummaryModal';
 import EditDealModal from './EditDealModal';
@@ -24,15 +23,17 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
 
   const getProductImagePath = (product: string) => {
     const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
-    const path = `/images/products/${normalizedProduct}.png?v=${Date.now()}`;
-    console.log(`Product image path for ${product}: ${path}`);
-    return path;
+    return `/images/products/${normalizedProduct}.png`;
   };
 
   const getOwnerImagePath = (owner: string) => {
-    const path = `/images/owners/${owner.toLowerCase()}.png?v=${Date.now()}`;
-    console.log(`Owner image path for ${owner}: ${path}`);
-    return path;
+    return `/images/owners/${owner.toLowerCase()}.png`;
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.onerror = null; // Prevent infinite loop
+    target.src = '/images/placeholder.png';
   };
 
   return (
@@ -72,35 +73,19 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
           )}
           <div className="flex gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
-              <Image
+              <img
                 src={getProductImagePath(deal.product)}
                 alt={deal.product}
-                width={32}
-                height={32}
-                className="object-cover"
-                priority
-                onError={(e) => {
-                  console.error(`Failed to load product image: ${deal.product}`);
-                  console.error(`Attempted path: ${getProductImagePath(deal.product)}`);
-                  const target = e.target as HTMLImageElement;
-                  target.src = '/images/placeholder.png';
-                }}
+                className="w-8 h-8 object-cover"
+                onError={handleImageError}
               />
             </div>
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Owner: ${deal.owner}`}>
-              <Image
+              <img
                 src={getOwnerImagePath(deal.owner)}
                 alt={deal.owner}
-                width={32}
-                height={32}
-                className="object-cover"
-                priority
-                onError={(e) => {
-                  console.error(`Failed to load owner image: ${deal.owner}`);
-                  console.error(`Attempted path: ${getOwnerImagePath(deal.owner)}`);
-                  const target = e.target as HTMLImageElement;
-                  target.src = '/images/placeholder.png';
-                }}
+                className="w-8 h-8 object-cover"
+                onError={handleImageError}
               />
             </div>
           </div>
