@@ -22,6 +22,15 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
     return days < 1 ? '0 days' : `${days} days`;
   };
 
+  const getProductImagePath = (product: string) => {
+    const normalizedProduct = product.toLowerCase().replace(/\s+/g, '-');
+    return `/images/products/${normalizedProduct}.png`;
+  };
+
+  const getOwnerImagePath = (owner: string) => {
+    return `/images/owners/${owner.toLowerCase()}.png`;
+  };
+
   return (
     <>
       <div 
@@ -60,20 +69,32 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
           <div className="flex gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
               <Image
-                src={`/images/products/${deal.product.toLowerCase().replace(/\s+/g, '-')}.png`}
+                src={getProductImagePath(deal.product)}
                 alt={deal.product}
-                fill
+                width={32}
+                height={32}
                 className="object-cover"
                 priority
+                onError={(e) => {
+                  console.error(`Failed to load product image: ${deal.product}`);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/images/placeholder.png';
+                }}
               />
             </div>
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Owner: ${deal.owner}`}>
               <Image
-                src={`/images/owners/${deal.owner.toLowerCase()}.png`}
+                src={getOwnerImagePath(deal.owner)}
                 alt={deal.owner}
-                fill
+                width={32}
+                height={32}
                 className="object-cover"
                 priority
+                onError={(e) => {
+                  console.error(`Failed to load owner image: ${deal.owner}`);
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/images/placeholder.png';
+                }}
               />
             </div>
           </div>
