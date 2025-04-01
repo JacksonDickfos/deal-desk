@@ -107,7 +107,7 @@ export default function KanbanBoard() {
             return (
               <div key={stage} className="flex-none">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">
-                  {STAGE_DISPLAY_NAMES[stage]} ({stats.dealsCount})
+                  {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
                 </h2>
                 
                 <div className="space-y-1 mb-4">
