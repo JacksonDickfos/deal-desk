@@ -132,11 +132,7 @@ export default function KanbanBoard() {
                     <span className="font-normal">
                       {stage === 'Won' ? 'Total Forecast: ' : `Forecast (${FORECAST_PERCENTAGES[stage] * 100}%): `}
                     </span>
-                    <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
-                      stage === 'Lost' ? 'text-gray-500' :
-                      stage === 'Closing' ? 'text-app-purple' :
-                      'text-blue-600'
-                    }`}>
+                    <span className={`${stage === 'Won' ? 'font-bold' : ''}`}>
                       ${stats.combinedForecast.toLocaleString()}
                     </span>
                   </div>
