@@ -17,10 +17,10 @@ const STAGE_DISPLAY_NAMES: Record<DealStage, string> = {
 };
 
 const FORECAST_PERCENTAGES = {
-  "Demo'd": 0.2,
+  "Demo'd": 0.15,
   'Closing': 0.5,
   'Won': 1,
-  'Lost': 0.02
+  'Lost': 0.03
 };
 
 export default function KanbanBoard() {
