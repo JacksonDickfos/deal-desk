@@ -61,23 +61,25 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
               RaaS: ${deal.raas.toLocaleString()}
             </div>
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsEditModalOpen(true);
-            }}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <PencilIcon className="h-5 w-5" />
-          </button>
+          <div className="flex flex-col items-end">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsEditModalOpen(true);
+              }}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <PencilIcon className="h-5 w-5" />
+            </button>
+            {deal.demo_date && (
+              <span className="text-sm text-gray-500 mt-1">
+                {getDaysSinceDemo(deal.demo_date)}
+              </span>
+            )}
+          </div>
         </div>
 
-        <div className="flex justify-between items-center mt-2">
-          {deal.demo_date && (
-            <span className="text-sm text-gray-500">
-              {getDaysSinceDemo(deal.demo_date)}
-            </span>
-          )}
+        <div className="flex justify-end items-center mt-2">
           <div className="flex gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
               <Image
