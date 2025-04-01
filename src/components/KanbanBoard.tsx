@@ -104,7 +104,7 @@ export default function KanbanBoard() {
           const isWonColumn = stage === 'Won';
           
           return (
-            <div key={stage} className="flex-1">
+            <div key={stage} className="flex-none">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
                 {STAGE_DISPLAY_NAMES[stage]} ({stats.dealsCount})
               </h2>
