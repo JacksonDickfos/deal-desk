@@ -44,7 +44,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
   return (
     <>
       <div 
-        className={`bg-white rounded-lg border-[1.5px] p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer ${
+        className={`rounded-lg border-[1.5px] p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer ${
           deal.stage === 'Won' ? 'border-green-500' : 
           deal.stage === 'Lost' ? 'border-gray-200' :
           'border-blue-600'
