@@ -52,8 +52,8 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
         onClick={() => setIsSummaryModalOpen(true)}
       >
         <div className="flex items-start justify-between mb-3">
-          <div className="flex-grow min-w-0 pr-4">
-            <h3 className="text-lg font-semibold text-gray-900 truncate max-w-[250px]">
+          <div className="flex-grow min-w-0 pr-2">
+            <h3 className="text-lg font-semibold text-gray-900 truncate">
               {deal.company}
             </h3>
             <div className="mt-1 text-sm text-gray-600">
@@ -63,7 +63,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
               RaaS: ${deal.raas.toLocaleString()}
             </div>
           </div>
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end flex-shrink-0 w-[40px]">
             <button
               onClick={(e) => {
                 e.stopPropagation();
