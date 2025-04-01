@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import { useDeals } from '@/contexts/DealsContext';
-import { Deal } from '@/types';
+import { Deal, Product } from '@/types';
 import Image from 'next/image';
 import { STORAGE_BUCKETS, getImageUrl } from '@/lib/supabase';
+
+// Define all available products
+const ALL_PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
 
 export default function ProductPage() {
   const { deals } = useDeals();
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
-
-  const products = Array.from(new Set(deals.map(deal => deal.product)));
   
   const getProductStats = (product: string) => {
     const productDeals = deals.filter(deal => deal.product === product);
@@ -52,7 +53,7 @@ export default function ProductPage() {
       <h1 className="text-3xl font-bold mb-8">Products</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map(product => {
+        {ALL_PRODUCTS.map(product => {
           const stats = getProductStats(product);
           const isSelected = selectedProduct === product;
           
@@ -100,7 +101,7 @@ export default function ProductPage() {
                 </p>
               </div>
 
-              {isSelected && (
+              {isSelected && stats.totalDeals > 0 && (
                 <div className="mt-6">
                   <h3 className="text-lg font-semibold mb-3">Product Deals</h3>
                   <div className="space-y-2">
