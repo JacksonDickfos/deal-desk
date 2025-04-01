@@ -98,7 +98,7 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-8 px-6 min-h-screen">
+      <div className="flex gap-8 px-6 min-h-screen bg-gray-50">
         {STAGES.map(stage => {
           const stats = calculateColumnStats(stage);
           const isWonColumn = stage === 'Won';
