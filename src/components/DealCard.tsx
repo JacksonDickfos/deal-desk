@@ -53,13 +53,13 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
       >
         <div className="flex items-start justify-between mb-2">
           <div className="flex-grow min-w-0 pr-2">
-            <h3 className="text-base font-semibold text-gray-900 truncate leading-tight">
+            <h3 className="text-base font-semibold text-gray-900 truncate leading-tight mb-[6px]">
               {deal.company}
             </h3>
-            <div className="mt-0.5 text-sm text-gray-600">
+            <div className="text-sm text-gray-600">
               ARR: ${deal.amount.toLocaleString()}
             </div>
-            <div className="mt-0.5 text-sm text-gray-600">
+            <div className="mt-[10px] text-sm text-gray-600">
               RaaS: ${deal.raas.toLocaleString()}
             </div>
           </div>
@@ -74,11 +74,11 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
               <PencilIcon className="h-5 w-5" />
             </button>
             {deal.demo_date && (
-              <span className="text-sm text-gray-500 mt-0.5">
+              <span className="text-sm text-gray-500 mt-[6px]">
                 {getDaysSinceDemo(deal.demo_date)}
               </span>
             )}
-            <div className="flex gap-2 mt-0.5">
+            <div className="flex gap-2 mt-[10px]">
               <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
                 <Image
                   src={getProductImagePath(deal.product)}
