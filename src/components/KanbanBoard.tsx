@@ -120,7 +120,7 @@ export default function KanbanBoard() {
                     </span>
                   </div>
                   <div className="text-sm">
-                    <span className="font-normal">RaaS: </span>
+                    <span className="font-normal">Estimated RaaS: </span>
                     <span className={`font-bold ${
                       stage === 'Won' ? 'text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
