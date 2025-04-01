@@ -2,13 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone', // Forces static file serving for images
   images: {
-    domains: [
-      process.env.NEXT_PUBLIC_SUPABASE_URL?.replace('https://', ''),
-      'api.dicebear.com'
-    ].filter(Boolean),
-  }
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+    domains: ['**.supabase.co'],
+  },
 }
 
 module.exports = nextConfig 

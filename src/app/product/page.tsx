@@ -74,6 +74,9 @@ export default function ProductPage() {
                     className="object-contain"
                     onError={handleImageError}
                     style={{ maxWidth: '100%', maxHeight: '100%' }}
+                    unoptimized
+                    loading="eager"
+                    priority={true}
                   />
                 </div>
                 <h2 className="text-xl font-semibold">{product}</h2>
