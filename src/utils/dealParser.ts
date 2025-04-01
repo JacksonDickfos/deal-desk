@@ -1,7 +1,7 @@
 import { Deal, Owner, Product } from '@/types';
 
 const OWNERS: Owner[] = ['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'];
-const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
+const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'];
 
 export function parseDealInput(input: string): Partial<Deal> {
   const words = input.split(' ');

@@ -12,7 +12,7 @@ interface AddDealModalProps {
 }
 
 const OWNERS: Owner[] = ['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'];
-const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
+const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'];
 
 export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalProps) {
   const [formData, setFormData] = useState({

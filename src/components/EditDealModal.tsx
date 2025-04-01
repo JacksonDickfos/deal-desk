@@ -12,7 +12,7 @@ interface EditDealModalProps {
 }
 
 const OWNERS: Owner[] = ['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'];
-const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
+const PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'];
 
 export default function EditDealModal({ deal, isOpen, onClose, onSave }: EditDealModalProps) {
   const [editedDeal, setEditedDeal] = useState<Deal>({ ...deal });

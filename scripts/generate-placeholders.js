@@ -2,7 +2,7 @@ const fs = require('fs');
 const { createCanvas } = require('canvas');
 
 const OWNERS = ['Hasan', 'Jared', 'Guillermo', 'Ricardo', 'Kamran'];
-const PRODUCTS = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
+const PRODUCTS = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'];
 
 // Ensure directories exist
 fs.mkdirSync('public/images/owners', { recursive: true });
