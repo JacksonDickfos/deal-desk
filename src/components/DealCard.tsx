@@ -20,7 +20,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
 
   const getDaysSinceDemo = (demoDate: Date) => {
     const days = differenceInDays(new Date(), new Date(demoDate));
-    return days < 1 ? '0 days' : `${days} days`;
+    return days < 1 ? '0d' : `${days}d`;
   };
 
   const getProductImagePath = (product: string) => {
