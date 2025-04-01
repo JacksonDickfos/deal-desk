@@ -59,7 +59,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
             <div className="text-sm text-gray-600">
               ARR: ${deal.amount.toLocaleString()}
             </div>
-            <div className="mt-2 text-sm text-gray-600">
+            <div className="mt-1.5 text-sm text-gray-600">
               RaaS: ${deal.raas.toLocaleString()}
             </div>
           </div>
@@ -74,11 +74,11 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
               <PencilIcon className="h-5 w-5" />
             </button>
             {deal.demo_date && (
-              <span className="text-sm text-gray-500 mt-1">
+              <span className="text-sm text-gray-500 mt-0.5">
                 {getDaysSinceDemo(deal.demo_date)}
               </span>
             )}
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-1.5">
               <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
                 <Image
                   src={getProductImagePath(deal.product)}
