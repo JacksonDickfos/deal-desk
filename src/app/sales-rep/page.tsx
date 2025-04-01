@@ -52,7 +52,7 @@ export default function SalesRepPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Reps</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="flex gap-6 overflow-x-auto pb-6">
         {reps.map(rep => {
           const stats = getRepStats(rep);
           const isSelected = selectedRep === rep;
@@ -60,7 +60,7 @@ export default function SalesRepPage() {
           return (
             <div 
               key={rep}
-              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all ${
+              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all flex-none w-[280px] ${
                 isSelected ? 'border-blue-500 shadow-lg' : 'border-gray-200 hover:border-blue-300'
               }`}
               onClick={() => setSelectedRep(isSelected ? null : rep)}
