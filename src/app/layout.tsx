@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <DealsProvider>
-          <div className="min-h-screen bg-gray-100">
+          <div className="min-h-screen bg-white">
             <Header />
             <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
               {children}
