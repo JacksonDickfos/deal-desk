@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Deal, DealStage } from '@/types';
 import { useDeals } from '@/contexts/DealsContext';
 import DealCard from './DealCard';
+import StageStatsModal from './StageStatsModal';
 import { useState, useEffect } from 'react';
 
 const STAGES: DealStage[] = ["Demo'd", "Closing", "Won", "Lost"];
@@ -25,6 +26,7 @@ const FORECAST_PERCENTAGES = {
 export default function KanbanBoard() {
   const { deals, updateDeal } = useDeals();
   const [localDeals, setLocalDeals] = useState<Deal[]>(deals);
+  const [selectedStage, setSelectedStage] = useState<DealStage | null>(null);
 
   useEffect(() => {
     setLocalDeals(deals);
@@ -102,48 +104,15 @@ export default function KanbanBoard() {
         <div className="flex gap-8 px-6">
           {STAGES.map(stage => {
             const stats = calculateColumnStats(stage);
-            const isWonColumn = stage === 'Won';
             
             return (
               <div key={stage} className="flex-none">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                <button
+                  onClick={() => setSelectedStage(stage)}
+                  className="text-xl font-bold text-gray-900 mb-4 hover:text-app-purple transition-colors"
+                >
                   {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
-                </h2>
-                
-                <div className="space-y-1 mb-4">
-                  <div className="text-sm">
-                    <span className="font-normal">ARR: </span>
-                    <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
-                      ${stats.arr.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="text-sm">
-                    <span className="font-normal">RaaS: </span>
-                    <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
-                      ${stats.raas.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="text-sm">
-                    <span className="font-normal">
-                      {isWonColumn 
-                        ? 'Total Forecasted ARR: ' 
-                        : `Forecasted ARR (${(FORECAST_PERCENTAGES[stage] * 100)}%): `}
-                    </span>
-                    <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
-                      ${stats.forecastedArr.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="text-sm">
-                    <span className="font-normal">
-                      {isWonColumn 
-                        ? 'Total Forecasted RaaS: ' 
-                        : `Forecasted RaaS (${(FORECAST_PERCENTAGES[stage] * 100)}%): `}
-                    </span>
-                    <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
-                      ${stats.forecastedRaas.toLocaleString()}
-                    </span>
-                  </div>
-                </div>
+                </button>
 
                 <Droppable droppableId={stage}>
                   {(provided) => (
@@ -177,6 +146,16 @@ export default function KanbanBoard() {
           })}
         </div>
       </div>
+
+      {selectedStage && (
+        <StageStatsModal
+          isOpen={true}
+          onClose={() => setSelectedStage(null)}
+          stage={selectedStage}
+          stats={calculateColumnStats(selectedStage)}
+          forecastPercentage={FORECAST_PERCENTAGES[selectedStage]}
+        />
+      )}
     </DragDropContext>
   );
 }
