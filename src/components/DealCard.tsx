@@ -76,30 +76,27 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
                 {getDaysSinceDemo(deal.demo_date)}
               </span>
             )}
-          </div>
-        </div>
-
-        <div className="flex justify-end items-center mt-2">
-          <div className="flex gap-2">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
-              <Image
-                src={getProductImagePath(deal.product)}
-                alt={deal.product}
-                width={32}
-                height={32}
-                className="object-cover"
-                onError={handleImageError}
-              />
-            </div>
-            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Owner: ${deal.owner}`}>
-              <Image
-                src={getOwnerImagePath(deal.owner)}
-                alt={deal.owner}
-                width={32}
-                height={32}
-                className="object-cover"
-                onError={handleImageError}
-              />
+            <div className="flex gap-2 mt-1">
+              <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
+                <Image
+                  src={getProductImagePath(deal.product)}
+                  alt={deal.product}
+                  width={32}
+                  height={32}
+                  className="object-cover"
+                  onError={handleImageError}
+                />
+              </div>
+              <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Owner: ${deal.owner}`}>
+                <Image
+                  src={getOwnerImagePath(deal.owner)}
+                  alt={deal.owner}
+                  width={32}
+                  height={32}
+                  className="object-cover"
+                  onError={handleImageError}
+                />
+              </div>
             </div>
           </div>
         </div>
