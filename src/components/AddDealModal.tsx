@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Deal, Owner, Product } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -24,6 +24,14 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
   });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const dealNameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Focus the deal name input when modal opens
+      dealNameInputRef.current?.focus();
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,6 +106,7 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
               Deal Name
             </label>
             <input
+              ref={dealNameInputRef}
               type="text"
               value={formData.company}
               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
