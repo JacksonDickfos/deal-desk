@@ -106,14 +106,10 @@ export default function KanbanBoard() {
           return (
             <div key={stage} className="flex-1">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
-                {STAGE_DISPLAY_NAMES[stage]}
+                {STAGE_DISPLAY_NAMES[stage]} ({stats.dealsCount})
               </h2>
               
               <div className="space-y-1 mb-4">
-                <div className="text-sm">
-                  <span className="font-normal">Deals: </span>
-                  <span className="font-medium">{stats.dealsCount}</span>
-                </div>
                 <div className="text-sm">
                   <span className="font-normal">ARR: </span>
                   <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
