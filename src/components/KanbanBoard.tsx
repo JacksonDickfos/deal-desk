@@ -47,15 +47,15 @@ export default function KanbanBoard() {
     if (stage === 'Won') {
       // For Won column, sum up forecasted values from other columns
       const otherStages = ["Demo'd", "Closing", "Lost"];
-      combinedForecast = otherStages.reduce((sum, otherStage) => {
+      combinedForecast = Math.round(otherStages.reduce((sum, otherStage) => {
         const stageDeals = getColumnDeals(otherStage as DealStage);
         const stageTotal = stageDeals.reduce((s, deal) => s + deal.amount + deal.raas, 0);
         return sum + (stageTotal * FORECAST_PERCENTAGES[otherStage as DealStage]);
-      }, 0);
+      }, 0));
     } else {
       // For other columns, calculate based on their own percentage
       const total = arr + raas;
-      combinedForecast = total * FORECAST_PERCENTAGES[stage];
+      combinedForecast = Math.round(total * FORECAST_PERCENTAGES[stage]);
     }
 
     return { dealsCount, arr, raas, combinedForecast };
