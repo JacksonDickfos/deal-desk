@@ -44,22 +44,22 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
   return (
     <>
       <div 
-        className={`bg-white rounded-lg border-[1.5px] pt-[14px] pb-2 pl-3 pr-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer w-[280px] ${
+        className={`bg-white rounded-lg border-[1.5px] pt-3 pb-2 pl-3 pr-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer w-[280px] ${
           deal.stage === 'Won' ? 'border-green-500' : 
           deal.stage === 'Lost' ? 'border-gray-200' :
           'border-blue-600'
         }`}
         onClick={() => setIsSummaryModalOpen(true)}
       >
-        <div className="flex items-start justify-between mb-2">
+        <div className="flex items-start justify-between mb-1.5">
           <div className="flex-grow min-w-0 pr-2">
-            <h3 className="text-base font-semibold text-gray-900 truncate leading-tight mb-[6px]">
+            <h3 className="text-base font-semibold text-gray-900 truncate leading-tight mb-1">
               {deal.company}
             </h3>
             <div className="text-sm text-gray-600">
               ARR: ${deal.amount.toLocaleString()}
             </div>
-            <div className="mt-[10px] text-sm text-gray-600">
+            <div className="mt-2 text-sm text-gray-600">
               RaaS: ${deal.raas.toLocaleString()}
             </div>
           </div>
@@ -74,11 +74,11 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
               <PencilIcon className="h-5 w-5" />
             </button>
             {deal.demo_date && (
-              <span className="text-sm text-gray-500 mt-[6px]">
+              <span className="text-sm text-gray-500 mt-1">
                 {getDaysSinceDemo(deal.demo_date)}
               </span>
             )}
-            <div className="flex gap-2 mt-[10px]">
+            <div className="flex gap-2 mt-2">
               <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100" title={`Product: ${deal.product}`}>
                 <Image
                   src={getProductImagePath(deal.product)}
