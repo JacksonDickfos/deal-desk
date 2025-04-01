@@ -116,13 +116,13 @@ export default function KanbanBoard() {
                 </div>
                 <div className="text-sm">
                   <span className="font-normal">ARR: </span>
-                  <span className={`font-medium ${isWonColumn ? 'text-blue-600' : ''}`}>
+                  <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
                     ${stats.arr.toLocaleString()}
                   </span>
                 </div>
                 <div className="text-sm">
                   <span className="font-normal">RaaS: </span>
-                  <span className={`font-medium ${isWonColumn ? 'text-blue-600' : ''}`}>
+                  <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
                     ${stats.raas.toLocaleString()}
                   </span>
                 </div>
