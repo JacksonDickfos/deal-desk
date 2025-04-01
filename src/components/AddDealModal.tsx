@@ -18,18 +18,17 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
   const [formData, setFormData] = useState({
     company: '',
     amount: '',
+    raas: '',
     owner: 'Hasan' as Owner,
     product: 'Kayako' as Product,
-    raas: ''
   });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dealNameInputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      // Focus the deal name input when modal opens
-      dealNameInputRef.current?.focus();
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
     }
   }, [isOpen]);
 
@@ -106,8 +105,8 @@ export default function AddDealModal({ isOpen, onClose, onAdd }: AddDealModalPro
               Deal Name
             </label>
             <input
-              ref={dealNameInputRef}
               type="text"
+              ref={inputRef}
               value={formData.company}
               onChange={(e) => setFormData({ ...formData, company: e.target.value })}
               className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
