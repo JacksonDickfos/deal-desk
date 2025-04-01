@@ -42,30 +42,23 @@ export default function KanbanBoard() {
     const arr = columnDeals.reduce((sum, deal) => sum + deal.amount, 0);
     const raas = columnDeals.reduce((sum, deal) => sum + deal.raas, 0);
 
-    let forecastedArr;
-    let forecastedRaas;
+    let combinedForecast;
 
     if (stage === 'Won') {
       // For Won column, sum up forecasted values from other columns
       const otherStages = ["Demo'd", "Closing", "Lost"];
-      forecastedArr = otherStages.reduce((sum, otherStage) => {
+      combinedForecast = otherStages.reduce((sum, otherStage) => {
         const stageDeals = getColumnDeals(otherStage as DealStage);
-        const stageArr = stageDeals.reduce((s, deal) => s + deal.amount, 0);
-        return sum + (stageArr * FORECAST_PERCENTAGES[otherStage as DealStage]);
-      }, 0);
-
-      forecastedRaas = otherStages.reduce((sum, otherStage) => {
-        const stageDeals = getColumnDeals(otherStage as DealStage);
-        const stageRaas = stageDeals.reduce((s, deal) => s + deal.raas, 0);
-        return sum + (stageRaas * FORECAST_PERCENTAGES[otherStage as DealStage]);
+        const stageTotal = stageDeals.reduce((s, deal) => s + deal.amount + deal.raas, 0);
+        return sum + (stageTotal * FORECAST_PERCENTAGES[otherStage as DealStage]);
       }, 0);
     } else {
       // For other columns, calculate based on their own percentage
-      forecastedArr = arr * FORECAST_PERCENTAGES[stage];
-      forecastedRaas = raas * FORECAST_PERCENTAGES[stage];
+      const total = arr + raas;
+      combinedForecast = total * FORECAST_PERCENTAGES[stage];
     }
 
-    return { dealsCount, arr, raas, forecastedArr, forecastedRaas };
+    return { dealsCount, arr, raas, combinedForecast };
   };
 
   const onDragEnd = async (result: any) => {
@@ -135,6 +128,19 @@ export default function KanbanBoard() {
                       'text-blue-600'
                     }`}>
                       ${stats.raas.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-normal">
+                      {stage === 'Won' ? 'Total Forecast: ' : `Forecast (${FORECAST_PERCENTAGES[stage] * 100}%): `}
+                    </span>
+                    <span className={`font-bold ${
+                      stage === 'Won' ? 'text-green-600' : 
+                      stage === 'Lost' ? 'text-gray-500' :
+                      stage === 'Closing' ? 'text-app-purple' :
+                      'text-blue-600'
+                    }`}>
+                      ${stats.combinedForecast.toLocaleString()}
                     </span>
                   </div>
                 </div>

@@ -11,8 +11,7 @@ interface StageStatsModalProps {
     dealsCount: number;
     arr: number;
     raas: number;
-    forecastedArr: number;
-    forecastedRaas: number;
+    combinedForecast: number;
   };
   forecastPercentage: number;
 }
@@ -35,19 +34,13 @@ export default function StageStatsModal({ isOpen, onClose, stage, stats, forecas
         <div className="space-y-4">
           <div>
             <h3 className="text-lg font-semibold mb-2">
-              {isWonColumn ? 'Total Forecasted Values' : `Forecasted Values (${forecastPercentage * 100}%)`}
+              {isWonColumn ? 'Total Forecasted Value' : `Forecasted Value (${forecastPercentage * 100}%)`}
             </h3>
             <div className="space-y-2">
               <p className="text-gray-600">
-                Forecasted ARR:{' '}
-                <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
-                  ${stats.forecastedArr.toLocaleString()}
-                </span>
-              </p>
-              <p className="text-gray-600">
-                Forecasted RaaS:{' '}
-                <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
-                  ${stats.forecastedRaas.toLocaleString()}
+                Combined Forecast (ARR + RaaS):{' '}
+                <span className={`font-bold ${isWonColumn ? 'text-purple-600' : ''}`}>
+                  ${stats.combinedForecast.toLocaleString()}
                 </span>
               </p>
             </div>
