@@ -110,8 +110,7 @@ export default function KanbanBoard() {
                 <div className="space-y-1 mb-4">
                   <div className="text-sm">
                     <span className="font-normal">ARR: </span>
-                    <span className={`font-bold ${
-                      stage === 'Won' ? 'text-green-600' : 
+                    <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
                       stage === 'Closing' ? 'text-app-purple' :
                       'text-blue-600'
@@ -121,8 +120,7 @@ export default function KanbanBoard() {
                   </div>
                   <div className="text-sm">
                     <span className="font-normal">Estimated RaaS: </span>
-                    <span className={`font-bold ${
-                      stage === 'Won' ? 'text-green-600' : 
+                    <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
                       stage === 'Closing' ? 'text-app-purple' :
                       'text-blue-600'
@@ -134,8 +132,7 @@ export default function KanbanBoard() {
                     <span className="font-normal">
                       {stage === 'Won' ? 'Total Forecast: ' : `Forecast (${FORECAST_PERCENTAGES[stage] * 100}%): `}
                     </span>
-                    <span className={`font-bold ${
-                      stage === 'Won' ? 'text-green-600' : 
+                    <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
                       stage === 'Closing' ? 'text-app-purple' :
                       'text-blue-600'
