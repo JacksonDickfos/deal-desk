@@ -98,82 +98,84 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-8 px-6 min-h-screen bg-gray-50">
-        {STAGES.map(stage => {
-          const stats = calculateColumnStats(stage);
-          const isWonColumn = stage === 'Won';
-          
-          return (
-            <div key={stage} className="flex-none">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
-                {STAGE_DISPLAY_NAMES[stage]} ({stats.dealsCount})
-              </h2>
-              
-              <div className="space-y-1 mb-4">
-                <div className="text-sm">
-                  <span className="font-normal">ARR: </span>
-                  <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
-                    ${stats.arr.toLocaleString()}
-                  </span>
-                </div>
-                <div className="text-sm">
-                  <span className="font-normal">RaaS: </span>
-                  <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
-                    ${stats.raas.toLocaleString()}
-                  </span>
-                </div>
-                <div className="text-sm">
-                  <span className="font-normal">
-                    {isWonColumn 
-                      ? 'Total Forecasted ARR: ' 
-                      : `Forecasted ARR (${(FORECAST_PERCENTAGES[stage] * 100)}%): `}
-                  </span>
-                  <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
-                    ${stats.forecastedArr.toLocaleString()}
-                  </span>
-                </div>
-                <div className="text-sm">
-                  <span className="font-normal">
-                    {isWonColumn 
-                      ? 'Total Forecasted RaaS: ' 
-                      : `Forecasted RaaS (${(FORECAST_PERCENTAGES[stage] * 100)}%): `}
-                  </span>
-                  <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
-                    ${stats.forecastedRaas.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-
-              <Droppable droppableId={stage}>
-                {(provided) => (
-                  <div
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    className="space-y-3"
-                  >
-                    {getColumnDeals(stage).map((deal, index) => (
-                      <Draggable key={deal.id} draggableId={deal.id} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <DealCard 
-                              deal={deal}
-                              onDealUpdate={updateDeal}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
+      <div className="flex justify-center min-h-screen bg-gray-50">
+        <div className="flex gap-8 px-6">
+          {STAGES.map(stage => {
+            const stats = calculateColumnStats(stage);
+            const isWonColumn = stage === 'Won';
+            
+            return (
+              <div key={stage} className="flex-none">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  {STAGE_DISPLAY_NAMES[stage]} ({stats.dealsCount})
+                </h2>
+                
+                <div className="space-y-1 mb-4">
+                  <div className="text-sm">
+                    <span className="font-normal">ARR: </span>
+                    <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
+                      ${stats.arr.toLocaleString()}
+                    </span>
                   </div>
-                )}
-              </Droppable>
-            </div>
-          );
-        })}
+                  <div className="text-sm">
+                    <span className="font-normal">RaaS: </span>
+                    <span className={`font-medium ${isWonColumn ? 'text-green-500' : ''}`}>
+                      ${stats.raas.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-normal">
+                      {isWonColumn 
+                        ? 'Total Forecasted ARR: ' 
+                        : `Forecasted ARR (${(FORECAST_PERCENTAGES[stage] * 100)}%): `}
+                    </span>
+                    <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
+                      ${stats.forecastedArr.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-normal">
+                      {isWonColumn 
+                        ? 'Total Forecasted RaaS: ' 
+                        : `Forecasted RaaS (${(FORECAST_PERCENTAGES[stage] * 100)}%): `}
+                    </span>
+                    <span className={`font-medium ${isWonColumn ? 'text-purple-600' : ''}`}>
+                      ${stats.forecastedRaas.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                <Droppable droppableId={stage}>
+                  {(provided) => (
+                    <div
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className="space-y-3"
+                    >
+                      {getColumnDeals(stage).map((deal, index) => (
+                        <Draggable key={deal.id} draggableId={deal.id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <DealCard 
+                                deal={deal}
+                                onDealUpdate={updateDeal}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </DragDropContext>
   );
