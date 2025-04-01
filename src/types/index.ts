@@ -1,6 +1,6 @@
 export type DealStage = "Demo'd" | "Closing" | "Won" | "Lost";
 export type Owner = "Hasan" | "Jared" | "Guillermo" | "Ricardo" | "Kamran";
-export type Product = "Kayako" | "Influitive" | "Agents" | "CRMagic" | "Ephor" | "AI Caller";
+export type Product = "Kayako" | "Influitive" | "Agents" | "CRMagic" | "Ephor";
 
 export interface Deal {
   id: string;

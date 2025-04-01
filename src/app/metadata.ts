@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Deal Desk',
-  description: 'Deal Desk Management System',
+  title: 'NCA & GTM',
+  description: 'NCA & GTM Management System',
 } 

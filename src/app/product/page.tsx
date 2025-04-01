@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { STORAGE_BUCKETS, getImageUrl } from '@/lib/supabase';
 
 // Define all available products
-const ALL_PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor', 'AI Caller'];
+const ALL_PRODUCTS: Product[] = ['Kayako', 'Influitive', 'Agents', 'CRMagic', 'Ephor'];
 
 export default function ProductPage() {
   const { deals } = useDeals();
