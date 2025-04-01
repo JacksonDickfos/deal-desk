@@ -59,7 +59,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
             <div className="text-sm text-gray-600">
               ARR: ${deal.amount.toLocaleString()}
             </div>
-            <div className="mt-1.5 text-sm text-gray-600">
+            <div className="mt-1 text-sm text-gray-600">
               RaaS: ${deal.raas.toLocaleString()}
             </div>
           </div>
