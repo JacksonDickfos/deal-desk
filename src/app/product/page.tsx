@@ -65,14 +65,15 @@ export default function ProductPage() {
               onClick={() => setSelectedProduct(isSelected ? null : product)}
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-100">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                   <Image
                     src={getProductImagePath(product)}
                     alt={product}
                     width={48}
                     height={48}
-                    className="object-cover"
+                    className="object-contain"
                     onError={handleImageError}
+                    style={{ maxWidth: '100%', maxHeight: '100%' }}
                   />
                 </div>
                 <h2 className="text-xl font-semibold">{product}</h2>
