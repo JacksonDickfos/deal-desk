@@ -44,7 +44,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
   return (
     <>
       <div 
-        className={`bg-white rounded-lg border-[1.5px] py-2 px-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer w-[280px] ${
+        className={`bg-white rounded-lg border-[1.5px] pt-[14px] pb-2 pl-3 pr-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer w-[280px] ${
           deal.stage === 'Won' ? 'border-green-500' : 
           deal.stage === 'Lost' ? 'border-gray-200' :
           'border-blue-600'
@@ -53,7 +53,7 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
       >
         <div className="flex items-start justify-between mb-2">
           <div className="flex-grow min-w-0 pr-2">
-            <h3 className="text-lg font-semibold text-gray-900 truncate leading-tight">
+            <h3 className="text-base font-semibold text-gray-900 truncate leading-tight">
               {deal.company}
             </h3>
             <div className="mt-0.5 text-sm text-gray-600">
