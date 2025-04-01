@@ -45,7 +45,9 @@ export default function DealCard({ deal, onDealUpdate }: DealCardProps) {
     <>
       <div 
         className={`bg-white rounded-lg border p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer ${
-          deal.stage === 'Won' ? 'border-blue-600' : 'border-gray-200'
+          deal.stage === 'Won' ? 'border-green-600' : 
+          deal.stage === 'Lost' ? 'border-gray-200' :
+          'border-blue-600'
         }`}
         onClick={() => setIsSummaryModalOpen(true)}
       >
