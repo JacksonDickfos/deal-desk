@@ -117,13 +117,23 @@ export default function KanbanBoard() {
                 <div className="space-y-1 mb-4">
                   <div className="text-sm">
                     <span className="font-normal">ARR: </span>
-                    <span className={`font-medium ${stage === 'Won' ? 'text-green-500' : ''}`}>
+                    <span className={`font-medium ${
+                      stage === 'Won' ? 'text-green-500' : 
+                      stage === 'Lost' ? 'text-gray-500' :
+                      stage === 'Closing' ? 'text-app-purple' :
+                      'text-blue-600'
+                    }`}>
                       ${stats.arr.toLocaleString()}
                     </span>
                   </div>
                   <div className="text-sm">
                     <span className="font-normal">RaaS: </span>
-                    <span className={`font-medium ${stage === 'Won' ? 'text-green-500' : ''}`}>
+                    <span className={`font-medium ${
+                      stage === 'Won' ? 'text-green-500' : 
+                      stage === 'Lost' ? 'text-gray-500' :
+                      stage === 'Closing' ? 'text-app-purple' :
+                      'text-blue-600'
+                    }`}>
                       ${stats.raas.toLocaleString()}
                     </span>
                   </div>
