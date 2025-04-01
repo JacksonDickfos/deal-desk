@@ -117,8 +117,8 @@ export default function KanbanBoard() {
                 <div className="space-y-1 mb-4">
                   <div className="text-sm">
                     <span className="font-normal">ARR: </span>
-                    <span className={`font-medium ${
-                      stage === 'Won' ? 'text-green-500' : 
+                    <span className={`font-bold ${
+                      stage === 'Won' ? 'text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
                       stage === 'Closing' ? 'text-app-purple' :
                       'text-blue-600'
@@ -128,8 +128,8 @@ export default function KanbanBoard() {
                   </div>
                   <div className="text-sm">
                     <span className="font-normal">RaaS: </span>
-                    <span className={`font-medium ${
-                      stage === 'Won' ? 'text-green-500' : 
+                    <span className={`font-bold ${
+                      stage === 'Won' ? 'text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
                       stage === 'Closing' ? 'text-app-purple' :
                       'text-blue-600'
