@@ -19,13 +19,13 @@ export default function Header() {
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 <a href="/" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                  Kanban Board
+                  Deals
                 </a>
                 <a href="/sales-rep" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                  By Sales Rep
+                  Reps
                 </a>
                 <a href="/product" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                  By Product
+                  Products
                 </a>
               </div>
             </div>
