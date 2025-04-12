@@ -60,7 +60,7 @@ export default function SalesRepPage() {
           return (
             <div 
               key={rep}
-              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all flex-none w-[280px] ${
+              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all flex-none w-[240px] ${
                 isSelected ? 'border-blue-500 shadow-lg' : 'border-gray-200 hover:border-blue-300'
               }`}
               onClick={() => setSelectedRep(isSelected ? null : rep)}
