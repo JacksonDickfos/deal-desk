@@ -69,13 +69,8 @@ export default function ProductPage() {
           return (
             <div 
               key={product}
-              className={`rounded-lg border border-gray-200 p-6 cursor-pointer transition-all w-[260px] ${
-                isSelected ? 'shadow-lg' : 'hover:shadow-md'
-              } ${
-                stage === 'Won' ? 'bg-green-50' :
-                stage === 'Lost' ? 'bg-white' :
-                stage === 'Closing' ? 'bg-app-purple/10' :
-                'bg-blue-50'
+              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all w-[260px] ${
+                isSelected ? 'border-blue-500 shadow-lg' : 'border-gray-200 hover:border-blue-300'
               }`}
               onClick={() => setSelectedProduct(isSelected ? null : product)}
             >
