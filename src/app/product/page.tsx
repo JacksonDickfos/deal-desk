@@ -49,10 +49,10 @@ export default function ProductPage() {
   };
 
   return (
-    <div className="container mx-auto px-2 py-8">
-      <h1 className="text-3xl font-bold mb-8 px-2">Products</h1>
+    <div className="px-1 py-8">
+      <h1 className="text-3xl font-bold mb-8 px-1">Products</h1>
       
-      <div className="flex gap-4 overflow-x-auto pb-6">
+      <div className="flex gap-3 pb-6 justify-center">
         {ALL_PRODUCTS.map(product => {
           const stats = getProductStats(product);
           const isSelected = selectedProduct === product;
@@ -60,7 +60,7 @@ export default function ProductPage() {
           return (
             <div 
               key={product}
-              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all flex-none w-[260px] ${
+              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all w-[260px] ${
                 isSelected ? 'border-blue-500 shadow-lg' : 'border-gray-200 hover:border-blue-300'
               }`}
               onClick={() => setSelectedProduct(isSelected ? null : product)}
