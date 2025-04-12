@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useDeals } from '@/contexts/DealsContext';
-import { Deal, Product } from '@/types';
+import { Deal, Product, DealStage } from '@/types';
 import Image from 'next/image';
 import { STORAGE_BUCKETS, getImageUrl } from '@/lib/supabase';
 
@@ -48,6 +48,14 @@ export default function ProductPage() {
     target.src = 'https://api.dicebear.com/7.x/avatars/svg?seed=fallback';
   };
 
+  const getProductStage = (product: string): DealStage => {
+    const productDeals = deals.filter(deal => deal.product === product);
+    if (productDeals.some(deal => deal.stage === 'Won')) return 'Won';
+    if (productDeals.some(deal => deal.stage === 'Closing')) return 'Closing';
+    if (productDeals.some(deal => deal.stage === "Demo'd")) return "Demo'd";
+    return 'Lost';
+  };
+
   return (
     <div className="px-1 py-8">
       <h1 className="text-3xl font-bold mb-8 px-1">Products</h1>
@@ -56,12 +64,18 @@ export default function ProductPage() {
         {ALL_PRODUCTS.map(product => {
           const stats = getProductStats(product);
           const isSelected = selectedProduct === product;
+          const stage = getProductStage(product);
           
           return (
             <div 
               key={product}
-              className={`bg-white rounded-lg border p-6 cursor-pointer transition-all w-[260px] ${
-                isSelected ? 'border-blue-500 shadow-lg' : 'border-gray-200 hover:border-blue-300'
+              className={`rounded-lg border border-gray-200 p-6 cursor-pointer transition-all w-[260px] ${
+                isSelected ? 'shadow-lg' : 'hover:shadow-md'
+              } ${
+                stage === 'Won' ? 'bg-green-50' :
+                stage === 'Lost' ? 'bg-white' :
+                stage === 'Closing' ? 'bg-app-purple/10' :
+                'bg-blue-50'
               }`}
               onClick={() => setSelectedProduct(isSelected ? null : product)}
             >
