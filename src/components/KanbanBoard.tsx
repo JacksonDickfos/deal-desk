@@ -6,6 +6,7 @@ import { useDeals } from '@/contexts/DealsContext';
 import DealCard from './DealCard';
 import StageStatsModal from './StageStatsModal';
 import { useState, useEffect } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 
 const STAGES: DealStage[] = ["Demo'd", "Closing", "Won", "Lost"];
 
@@ -27,6 +28,7 @@ export default function KanbanBoard() {
   const { deals, updateDeal } = useDeals();
   const [localDeals, setLocalDeals] = useState<Deal[]>(deals);
   const [selectedStage, setSelectedStage] = useState<DealStage | null>(null);
+  const [collapsedColumns, setCollapsedColumns] = useState<Set<DealStage>>(new Set());
 
   useEffect(() => {
     setLocalDeals(deals);
@@ -91,21 +93,53 @@ export default function KanbanBoard() {
     }
   };
 
+  const toggleColumnCollapse = (stage: DealStage) => {
+    setCollapsedColumns(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(stage)) {
+        newSet.delete(stage);
+      } else {
+        newSet.add(stage);
+      }
+      return newSet;
+    });
+  };
+
+  const isColumnCollapsible = (stage: DealStage) => {
+    return stage === 'Won' || stage === 'Lost';
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex justify-center min-h-screen bg-gray-50">
         <div className="flex gap-8 px-6">
           {STAGES.map(stage => {
             const stats = calculateColumnStats(stage);
+            const isCollapsible = isColumnCollapsible(stage);
+            const isCollapsed = collapsedColumns.has(stage);
             
             return (
               <div key={stage} className="flex-none">
-                <button
-                  onClick={() => setSelectedStage(stage)}
-                  className="text-xl font-bold text-gray-900 mb-4 hover:text-app-purple transition-colors"
-                >
-                  {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
-                </button>
+                <div className="flex items-center gap-2 mb-4">
+                  <button
+                    onClick={() => setSelectedStage(stage)}
+                    className="text-xl font-bold text-gray-900 hover:text-app-purple transition-colors"
+                  >
+                    {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
+                  </button>
+                  {isCollapsible && (
+                    <button
+                      onClick={() => toggleColumnCollapse(stage)}
+                      className="text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      {isCollapsed ? (
+                        <ChevronDownIcon className="h-5 w-5" />
+                      ) : (
+                        <ChevronUpIcon className="h-5 w-5" />
+                      )}
+                    </button>
+                  )}
+                </div>
 
                 <div className="space-y-1 mb-4">
                   <div className="text-sm">
@@ -119,7 +153,7 @@ export default function KanbanBoard() {
                     </span>
                   </div>
                   <div className="text-sm">
-                    <span className="font-normal">Estimated Yearly RaaS: </span>
+                    <span className="font-normal">Estimated RaaS: </span>
                     <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
                       stage === 'Lost' ? 'text-gray-500' :
                       stage === 'Closing' ? 'text-app-purple' :
@@ -143,7 +177,9 @@ export default function KanbanBoard() {
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className="space-y-3"
+                      className={`space-y-3 transition-all duration-300 ${
+                        isCollapsed ? 'h-0 overflow-hidden' : ''
+                      }`}
                     >
                       {getColumnDeals(stage).map((deal, index) => (
                         <Draggable key={deal.id} draggableId={deal.id} index={index}>
