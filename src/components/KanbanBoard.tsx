@@ -115,8 +115,8 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex justify-center min-h-screen bg-gray-50">
-        <div className="flex gap-8 px-6">
+      <div className="min-h-screen bg-gray-50 overflow-x-auto">
+        <div className="flex gap-8 px-6 min-w-fit">
           {STAGES.map(stage => {
             const stats = calculateColumnStats(stage);
             const isCollapsible = isColumnCollapsible(stage);
