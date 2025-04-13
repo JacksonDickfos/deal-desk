@@ -113,6 +113,19 @@ export default function KanbanBoard() {
     return stage === "Demo'd" || stage === "Closing";
   };
 
+  const getColumnWidth = (stage: DealStage, isCollapsed: boolean) => {
+    if (isCollapsed) return 'w-[40px]';
+    if (stage === "Demo'd") return 'w-[1200px]';
+    if (stage === "Closing") return 'w-[600px]';
+    return 'w-[280px]';
+  };
+
+  const getColumnLayout = (stage: DealStage) => {
+    if (stage === "Demo'd") return 'grid grid-cols-4 gap-3';
+    if (stage === "Closing") return 'grid grid-cols-2 gap-3';
+    return 'space-y-3';
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="overflow-x-auto bg-gray-50 min-h-screen">
@@ -121,13 +134,12 @@ export default function KanbanBoard() {
             const stats = calculateColumnStats(stage);
             const isCollapsible = isColumnCollapsible(stage);
             const isCollapsed = collapsedColumns.has(stage);
-            const isWide = isWideColumn(stage);
             
             return (
               <div 
                 key={stage} 
                 className={`flex-none transition-all duration-300 ${
-                  isCollapsed ? 'w-[40px]' : isWide ? 'w-[600px]' : 'w-[280px]'
+                  getColumnWidth(stage, isCollapsed)
                 }`}
               >
                 <div className="flex items-center gap-2 mb-4">
@@ -191,7 +203,7 @@ export default function KanbanBoard() {
                       ref={provided.innerRef}
                       className={`transition-all duration-300 ${
                         isCollapsed ? 'opacity-0 overflow-hidden w-0' : ''
-                      } ${isWide ? 'grid grid-cols-2 gap-3' : 'space-y-3'}`}
+                      } ${getColumnLayout(stage)}`}
                     >
                       {getColumnDeals(stage).map((deal, index) => (
                         <Draggable key={deal.id} draggableId={deal.id} index={index}>
