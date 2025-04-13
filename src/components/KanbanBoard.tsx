@@ -6,7 +6,7 @@ import { useDeals } from '@/contexts/DealsContext';
 import DealCard from './DealCard';
 import StageStatsModal from './StageStatsModal';
 import { useState, useEffect } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const STAGES: DealStage[] = ["Demo'd", "Closing", "Won", "Lost"];
 
@@ -124,29 +124,36 @@ export default function KanbanBoard() {
             const isWide = isWideColumn(stage);
             
             return (
-              <div key={stage} className={`flex-none ${isWide ? 'w-[600px]' : 'w-[280px]'}`}>
+              <div 
+                key={stage} 
+                className={`flex-none transition-all duration-300 ${
+                  isCollapsed ? 'w-[40px]' : isWide ? 'w-[600px]' : 'w-[280px]'
+                }`}
+              >
                 <div className="flex items-center gap-2 mb-4">
-                  <button
-                    onClick={() => setSelectedStage(stage)}
-                    className="text-xl font-bold text-gray-900 hover:text-app-purple transition-colors"
-                  >
-                    {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
-                  </button>
                   {isCollapsible && (
                     <button
                       onClick={() => toggleColumnCollapse(stage)}
                       className="text-gray-500 hover:text-gray-700 transition-colors"
                     >
                       {isCollapsed ? (
-                        <ChevronDownIcon className="h-5 w-5" />
+                        <ChevronRightIcon className="h-5 w-5" />
                       ) : (
-                        <ChevronUpIcon className="h-5 w-5" />
+                        <ChevronLeftIcon className="h-5 w-5" />
                       )}
                     </button>
                   )}
+                  <div className={`transition-opacity duration-300 ${isCollapsed ? 'opacity-0 overflow-hidden w-0' : 'opacity-100'}`}>
+                    <button
+                      onClick={() => setSelectedStage(stage)}
+                      className="text-xl font-bold text-gray-900 hover:text-app-purple transition-colors whitespace-nowrap"
+                    >
+                      {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="space-y-1 mb-4">
+                <div className={`space-y-1 mb-4 transition-opacity duration-300 ${isCollapsed ? 'opacity-0 overflow-hidden w-0' : 'opacity-100'}`}>
                   <div className="text-sm">
                     <span className="font-normal">ARR: </span>
                     <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
@@ -183,7 +190,7 @@ export default function KanbanBoard() {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                       className={`transition-all duration-300 ${
-                        isCollapsed ? 'h-0 overflow-hidden' : ''
+                        isCollapsed ? 'opacity-0 overflow-hidden w-0' : ''
                       } ${isWide ? 'grid grid-cols-2 gap-3' : 'space-y-3'}`}
                     >
                       {getColumnDeals(stage).map((deal, index) => (
