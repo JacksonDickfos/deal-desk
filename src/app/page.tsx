@@ -4,7 +4,7 @@ import KanbanBoard from '@/components/KanbanBoard';
 
 export default function Home() {
   return (
-    <div className="container mx-auto px-4">
+    <div className="w-full">
       <KanbanBoard />
     </div>
   );
