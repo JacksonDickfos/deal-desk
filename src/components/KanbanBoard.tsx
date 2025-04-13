@@ -109,6 +109,10 @@ export default function KanbanBoard() {
     return stage === 'Won' || stage === 'Lost';
   };
 
+  const isWideColumn = (stage: DealStage) => {
+    return stage === "Demo'd" || stage === "Closing";
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex justify-center min-h-screen bg-gray-50">
@@ -117,9 +121,10 @@ export default function KanbanBoard() {
             const stats = calculateColumnStats(stage);
             const isCollapsible = isColumnCollapsible(stage);
             const isCollapsed = collapsedColumns.has(stage);
+            const isWide = isWideColumn(stage);
             
             return (
-              <div key={stage} className="flex-none">
+              <div key={stage} className={`flex-none ${isWide ? 'w-[600px]' : 'w-[280px]'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <button
                     onClick={() => setSelectedStage(stage)}
@@ -177,9 +182,9 @@ export default function KanbanBoard() {
                     <div
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className={`space-y-3 transition-all duration-300 ${
+                      className={`transition-all duration-300 ${
                         isCollapsed ? 'h-0 overflow-hidden' : ''
-                      }`}
+                      } ${isWide ? 'grid grid-cols-2 gap-3' : 'space-y-3'}`}
                     >
                       {getColumnDeals(stage).map((deal, index) => (
                         <Draggable key={deal.id} draggableId={deal.id} index={index}>
