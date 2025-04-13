@@ -115,109 +115,107 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="min-h-screen bg-gray-50">
-        <div className="overflow-x-auto">
-          <div className="flex gap-8 pl-5 py-4 min-w-fit">
-            {STAGES.map(stage => {
-              const stats = calculateColumnStats(stage);
-              const isCollapsible = isColumnCollapsible(stage);
-              const isCollapsed = collapsedColumns.has(stage);
-              const isWide = isWideColumn(stage);
-              
-              return (
-                <div 
-                  key={stage} 
-                  className={`flex-none transition-all duration-300 ${
-                    isCollapsed ? 'w-[40px]' : isWide ? 'w-[600px]' : 'w-[280px]'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    {isCollapsible && (
-                      <button
-                        onClick={() => toggleColumnCollapse(stage)}
-                        className="text-gray-500 hover:text-gray-700 transition-colors"
-                      >
-                        {isCollapsed ? (
-                          <ChevronRightIcon className="h-5 w-5" />
-                        ) : (
-                          <ChevronLeftIcon className="h-5 w-5" />
-                        )}
-                      </button>
-                    )}
-                    <div className={`transition-opacity duration-300 ${isCollapsed ? 'opacity-0 overflow-hidden w-0' : 'opacity-100'}`}>
-                      <button
-                        onClick={() => setSelectedStage(stage)}
-                        className="text-xl font-bold text-gray-900 hover:text-app-purple transition-colors whitespace-nowrap"
-                      >
-                        {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
-                      </button>
-                    </div>
+      <div className="overflow-x-auto bg-gray-50 min-h-screen">
+        <div className="flex gap-8 pl-5 py-4">
+          {STAGES.map(stage => {
+            const stats = calculateColumnStats(stage);
+            const isCollapsible = isColumnCollapsible(stage);
+            const isCollapsed = collapsedColumns.has(stage);
+            const isWide = isWideColumn(stage);
+            
+            return (
+              <div 
+                key={stage} 
+                className={`flex-none transition-all duration-300 ${
+                  isCollapsed ? 'w-[40px]' : isWide ? 'w-[600px]' : 'w-[280px]'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  {isCollapsible && (
+                    <button
+                      onClick={() => toggleColumnCollapse(stage)}
+                      className="text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      {isCollapsed ? (
+                        <ChevronRightIcon className="h-5 w-5" />
+                      ) : (
+                        <ChevronLeftIcon className="h-5 w-5" />
+                      )}
+                    </button>
+                  )}
+                  <div className={`transition-opacity duration-300 ${isCollapsed ? 'opacity-0 overflow-hidden w-0' : 'opacity-100'}`}>
+                    <button
+                      onClick={() => setSelectedStage(stage)}
+                      className="text-xl font-bold text-gray-900 hover:text-app-purple transition-colors whitespace-nowrap"
+                    >
+                      {STAGE_DISPLAY_NAMES[stage]}: {stats.dealsCount}
+                    </button>
                   </div>
-
-                  <div className={`space-y-1 mb-4 transition-opacity duration-300 ${isCollapsed ? 'opacity-0 overflow-hidden w-0' : 'opacity-100'}`}>
-                    <div className="text-sm">
-                      <span className="font-normal">ARR: </span>
-                      <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
-                        stage === 'Lost' ? 'text-gray-500' :
-                        stage === 'Closing' ? 'text-app-purple' :
-                        'text-blue-600'
-                      }`}>
-                        ${stats.arr.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="text-sm">
-                      <span className="font-normal">Estimated RaaS: </span>
-                      <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
-                        stage === 'Lost' ? 'text-gray-500' :
-                        stage === 'Closing' ? 'text-app-purple' :
-                        'text-blue-600'
-                      }`}>
-                        ${stats.raas.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="text-sm">
-                      <span className="font-normal">
-                        {stage === 'Won' ? 'Total Forecast: ' : `Forecast (${FORECAST_PERCENTAGES[stage] * 100}%): `}
-                      </span>
-                      <span className="text-gray-900">
-                        ${stats.combinedForecast.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-
-                  <Droppable droppableId={stage}>
-                    {(provided) => (
-                      <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        className={`transition-all duration-300 ${
-                          isCollapsed ? 'opacity-0 overflow-hidden w-0' : ''
-                        } ${isWide ? 'grid grid-cols-2 gap-3' : 'space-y-3'}`}
-                      >
-                        {getColumnDeals(stage).map((deal, index) => (
-                          <Draggable key={deal.id} draggableId={deal.id} index={index}>
-                            {(provided) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                              >
-                                <DealCard 
-                                  deal={deal}
-                                  onDealUpdate={updateDeal}
-                                />
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
                 </div>
-              );
-            })}
-          </div>
+
+                <div className={`space-y-1 mb-4 transition-opacity duration-300 ${isCollapsed ? 'opacity-0 overflow-hidden w-0' : 'opacity-100'}`}>
+                  <div className="text-sm">
+                    <span className="font-normal">ARR: </span>
+                    <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
+                      stage === 'Lost' ? 'text-gray-500' :
+                      stage === 'Closing' ? 'text-app-purple' :
+                      'text-blue-600'
+                    }`}>
+                      ${stats.arr.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-normal">Estimated RaaS: </span>
+                    <span className={`${stage === 'Won' ? 'font-bold text-green-600' : 
+                      stage === 'Lost' ? 'text-gray-500' :
+                      stage === 'Closing' ? 'text-app-purple' :
+                      'text-blue-600'
+                    }`}>
+                      ${stats.raas.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <span className="font-normal">
+                      {stage === 'Won' ? 'Total Forecast: ' : `Forecast (${FORECAST_PERCENTAGES[stage] * 100}%): `}
+                    </span>
+                    <span className="text-gray-900">
+                      ${stats.combinedForecast.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                <Droppable droppableId={stage}>
+                  {(provided) => (
+                    <div
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      className={`transition-all duration-300 ${
+                        isCollapsed ? 'opacity-0 overflow-hidden w-0' : ''
+                      } ${isWide ? 'grid grid-cols-2 gap-3' : 'space-y-3'}`}
+                    >
+                      {getColumnDeals(stage).map((deal, index) => (
+                        <Draggable key={deal.id} draggableId={deal.id} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <DealCard 
+                                deal={deal}
+                                onDealUpdate={updateDeal}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </div>
+            );
+          })}
         </div>
       </div>
 
